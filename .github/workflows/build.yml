@@ -11,14 +11,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2.2.2
-      with:
-        python-version: ${{ matrix.python-version }}
+    - name: Set up Miniconda
+    - uses: conda-incubator/setup-miniconda@v2
+      run: |
+        conda install mamba
 
     - name: Install dependencies
       run: |
         make install
+        conda activate egaznepy_dev/
 
     - name: Run style checks
       run: |
