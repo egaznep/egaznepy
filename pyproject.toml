@@ -9,6 +9,14 @@ classifiers = [  #! Update me
   "Programming Language :: Python :: 3.9",
 ]
 
+[project]
+name = "egaznepy"
+description = "`egaznepy` is a Python package I developed for my personal needs. It contains streamlining code for publication-grade figures creation, and other helper code I often need across projects."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+version = "0.1.0"
+
 [tool.setuptools]
 py-modules=["egaznepy"]
 
