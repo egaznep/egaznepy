@@ -1,0 +1,36 @@
+# Git
+.git
+.gitignore
+.github
+
+# Docker
+.dockerignore
+
+# IDE
+.idea
+.vscode
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.py[cod]
+*$py.class
+.pytest_cache/
+..mypy_cache/
+
+# C extensions
+*.so
+
+# Virtual environment
+.venv
+venv
+egaznepy_dev
+
+.DS_Store
+.AppleDouble
+.LSOverride
+._*

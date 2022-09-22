@@ -1,0 +1,15 @@
+name: egaznepy_dev
+channels:
+  - defaults
+dependencies:
+  - mamba
+  - python<3.10
+  - jupyter
+  - matplotlib
+  - seaborn
+  - typer
+  - pre-commit
+  - pyupgrade
+  - pytest
+  - isort
+  - black

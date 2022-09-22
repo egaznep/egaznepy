@@ -1,0 +1,13 @@
+# This file contains values from Cookiecutter
+
+default_context:
+  project_name: "egaznepy"
+  project_description: "`egaznepy` is a Python package I developed for my personal needs. It contains streamlining code for publication-grade figures creation, and other helper code I often need across projects."
+  organization: "Unal Ege Gaznepoglu"
+  license: "MIT"
+  minimal_python_version: 3.9
+  github_name: "egaznep"
+  email: "egaznep@gmail.com"
+  version: "0.1.0"
+  line_length: "88"
+  create_example_template: "none"
