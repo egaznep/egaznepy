@@ -9,6 +9,9 @@ classifiers = [  #! Update me
   "Programming Language :: Python :: 3.9",
 ]
 
+[tool.setuptools]
+py-modules=["egaznepy"]
+
 [tool.black]
 # https://github.com/psf/black
 target-version = ["py39"]
