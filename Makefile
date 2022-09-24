@@ -1,5 +1,5 @@
 #* Variables
-SHELL := /usr/bin/env bash
+SHELL := bash
 PYTHON := python
 PYTHONPATH := `pwd`
 ENV_NAME=egaznepy_dev

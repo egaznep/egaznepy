@@ -1,5 +1,6 @@
 name: egaznepy_dev
 channels:
+  - conda-forge
   - defaults
 dependencies:
   - mamba
