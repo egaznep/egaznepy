@@ -4,6 +4,9 @@ on: [push, pull_request]
 
 jobs:
   build:
+    defaults:
+      run:
+        shell: bash -l {0}
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -12,17 +15,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Miniconda
-    - uses: conda-incubator/setup-miniconda@v2
-      run: |
-        conda install mamba
-
-    - name: Install dependencies
-      run: |
-        make install
-        conda activate egaznepy_dev/
-
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        miniconda-version: 'latest'
+        use-mamba: true
+        environment-yaml: environment.yaml
+        activate-environment: egaznepy_dev
+        use-only-tar-bz2: true
+        auto-activate-base: false
     - name: Run style checks
       run: |
+        conda info
+        which python
         make check-codestyle
 
     - name: Run tests
