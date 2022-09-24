@@ -11,3 +11,11 @@ dependencies:
   - isort
   - black
   - darglint
+  - coverage
+  - coverage-badge
+  - pytest-cov
+  - pytest-html
+  - mypy
+  - pip
+  - pydocstyle
+  - safety
