@@ -8,31 +8,25 @@ jobs:
       run:
         shell: bash -l {0}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.9"]
 
     steps:
     - uses: actions/checkout@v2
     - name: Set up Miniconda
-      shell: bash -l {0}
       uses: conda-incubator/setup-miniconda@v2
       with:
         miniconda-version: 'latest'
+        mamba-version: "*"
+        environment-file: environment.yaml
+        auto-activate-base: false
+
     - name: Run style checks
-      shell: bash -l {0}
       run: |
-        conda install -c conda-forge mamba
-        mamba env create -f environment.yaml
-        conda activate egaznepy_dev
         make check-codestyle
 
     - name: Run tests
-      shell: bash -l {0}
       run: |
         make test
 
     - name: Run safety checks
-      shell: bash -l {0}
       run: |
         make check-safety
