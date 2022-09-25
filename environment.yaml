@@ -4,6 +4,9 @@ channels:
 dependencies:
   - mamba
   - python<3.10
+  - matplotlib
+  - seaborn
+  # development prequisites
   - typer
   - pre-commit
   - pyupgrade
