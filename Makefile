@@ -40,7 +40,7 @@ test:
 check-codestyle:
 	isort --diff --check-only --settings-path pyproject.toml ./
 	black --diff --check --config pyproject.toml ./
-	darglint --verbosity 2 egaznepy tests
+	darglint --verbosity 2 --indentation 4 egaznepy tests
 
 .PHONY: mypy
 mypy:

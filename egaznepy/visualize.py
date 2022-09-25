@@ -1,6 +1,7 @@
 # visualization aids
 import os
 from collections import defaultdict
+from collections.abc import Iterable
 from pathlib import Path
 
 import cycler
@@ -112,10 +113,10 @@ class FigureWriter:
         file_name.extension` for each extension in self.extensions
 
         Args:
-            file_name (str): The file name (possibly in subfolders that may
-            or may not exist in figures_root)
+        file_name (str): The file name (possibly in subfolders that may
+        or may not exist in figures_root)
             fig (Figure, optional): A Matplotlib figure to be saved. If None then
-            plt.gcf() is saved.
+        plt.gcf() is saved.
             tight (bool): Whether the saved plot should have a tight bbox
         """
         kwargs = {}
@@ -132,14 +133,14 @@ class FigureWriter:
             fig.savefig(path, **kwargs)
 
 
-def apply_hatch_barplot(obj: Axes, hatches=None):
+def apply_hatch_barplot(obj: Axes, hatches: Iterable = None):
     """This function manually adds different (and unique) hatches to
     barplots. Useful while trying to obtain black & white printable plots.
 
     Args:
         obj (Axes): The axes object on which barplots are already plotted.
-        hatches (Iterable of strings, optional): Style of hatches, a
-        rich assortment is available on default.
+        hatches (Iterable): Style of hatches, a rich assortment is available
+            by default.
     """
     if hatches is None:
         hatches = ["", "///", "+", "x", "-", "*", "o"]
