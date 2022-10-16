@@ -17,8 +17,12 @@ requires-python = ">=3.9"
 license = {text = "MIT"}
 version = "0.1.0"
 
+[build-system]
+requires = ['setuptools']
+build-backend = 'setuptools.build_meta'
+
 [tool.setuptools]
-py-modules=["egaznepy"]
+packages=["egaznepy"]
 
 [tool.black]
 # https://github.com/psf/black
