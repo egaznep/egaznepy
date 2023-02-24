@@ -83,15 +83,17 @@ def apply_plot_style(font_scale: int = 0.7):
     sns.set_context("paper", font_scale=font_scale, rc=rc)
 
 
-def legend_with_unique_entries(fig: Figure):
+def legend_with_unique_entries(fig: Figure, ax: Axes = None):
     """Putting a legend to a figure with multiple subplots is troublesome as
     identical elements might be repeated. Filter out already defined entries
     and re-create a legend.
 
     Args:
         fig (Figure): the matplotlib figure object to operate on
+        ax (Axes, optional): the axis to place the figure on. by default it corresponds to fig.gca()
     """
-    ax = fig.gca()
+    if ax is None:
+        ax = fig.gca()
     handles, labels = ax.get_legend_handles_labels()
     unique = [
         (h, l) for i, (h, l) in enumerate(zip(handles, labels)) if l not in labels[:i]
