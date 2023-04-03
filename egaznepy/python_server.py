@@ -88,7 +88,9 @@ WavHandler.extensions_map[""] = "text/plain"
 def main(port: int = 8080):
     socketserver.TCPServer.allow_reuse_address = True
     with socketserver.TCPServer(("", port), WavHandler) as httpd:
-        print(f"Listening on port {port}. Press Ctrl+C to stop.")
+        print(
+            f"Listening on port {port}. Press Ctrl+C to stop. Server is now accessible over http://localhost:{port}/"
+        )
         httpd.serve_forever()
 
 
