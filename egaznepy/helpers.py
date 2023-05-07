@@ -19,3 +19,14 @@ def smart_normalize_audio(wav: np.ndarray):
     except:  # data is int, return adapted
         wav = wav.astype(np.float) / np.iinfo(wav.dtype).max
     return wav
+
+
+def trim_vectors_to_same_len(*args):
+    """Trims arbitrary number of vectors to the same length
+    (minimum of all vectors). Useful for audio.
+
+    Returns:
+        list[np.ndarray]: A list of vectors that are trimmed to same len.
+    """
+    L = min([len(x) for x in args])
+    return [x[:L] for x in args]
