@@ -7,7 +7,7 @@ def jupyter_use_whole_width_fix():
     display(HTML("<style>.container { width:100% !important; }</style>"))
 
 
-def smart_normalize_audio(wav: np.ndarray):
+def smart_normalize_audio(wav: np.ndarray, compensate_offset: bool = True):
     """
     .wav files have different specifications - sometimes data is stored as
     (signed) integers whereas in other times data is stored as (signed) floats.
@@ -18,6 +18,9 @@ def smart_normalize_audio(wav: np.ndarray):
         np.finfo(wav.dtype)  # data is already float, return unmodified
     except:  # data is int, return adapted
         wav = wav.astype(np.float) / np.iinfo(wav.dtype).max
+    # if requested subtract the median to properly compensate the DC offset
+    if compensate_offset:
+        wav -= np.median(wav)
     return wav
 
 
