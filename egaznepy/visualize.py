@@ -74,6 +74,10 @@ def apply_plot_style(font_scale: int = 0.7):
     \usepackage{stackengine}
     \usepackage{anyfontsize}
     \mathchardef\minus="2D
+    \newcommand{\ra}{$\rightarrow$ }
+    \newcommand{\ua}{$\uparrow$}
+    \newcommand{\da}{$\downarrow$}
+
     """,
         "axes.spines.right": False,
         "axes.spines.top": False,
