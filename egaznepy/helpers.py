@@ -1,3 +1,5 @@
+import subprocess
+
 import numpy as np
 
 
@@ -33,3 +35,12 @@ def trim_vectors_to_same_len(*args):
     """
     L = min([len(x) for x in args])
     return [x[:L] for x in args]
+
+
+def invoke_command(*args):
+    """
+    Performs call to shell, captures stdout and returns it as a decoded string.
+    Ensures that nothing is printed to the console.
+    """
+    out = subprocess.run(*args, capture_output=True, check=False, shell=True)
+    return out.stdout.decode()
