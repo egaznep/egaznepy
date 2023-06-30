@@ -39,8 +39,8 @@ def trim_vectors_to_same_len(*args):
 
 def invoke_command(*args):
     """
-    Performs call to shell, captures stdout and returns it as a decoded string.
+    Performs call to shell, captures (stdout, stderr) and returns it as a decoded string.
     Ensures that nothing is printed to the console.
     """
     out = subprocess.run(*args, capture_output=True, check=False, shell=True)
-    return out.stdout.decode()
+    return out.stdout.decode() + "\n" + out.stderr.decode()
