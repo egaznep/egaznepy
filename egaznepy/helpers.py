@@ -1,12 +1,30 @@
 import subprocess
 
 import numpy as np
+import scipy.signal
 
 
 def jupyter_use_whole_width_fix():
     from IPython.display import HTML, display
 
     display(HTML("<style>.container { width:100% !important; }</style>"))
+
+
+def align_signals(x, x_ref):
+    """
+    Aligns two signals time-wise and sign-wise.
+    """
+    aligned = np.zeros_like(x)
+    L = len(aligned)
+    lags = scipy.signal.correlation_lags(len(x), len(x_ref), mode="same")
+    xc = scipy.signal.correlate(x, x_ref, mode="same")
+    pos = np.argmax(np.abs(xc))
+    offset = lags[pos]
+    sign = np.sign(xc[pos])
+    aligned[max(0, -offset) : min(L, L - offset)] = (
+        sign * x[max(0, offset) : min(L, L + offset)]
+    )
+    return aligned
 
 
 def smart_normalize_audio(
