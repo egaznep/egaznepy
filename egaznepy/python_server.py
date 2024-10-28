@@ -7,6 +7,7 @@ import os
 import socketserver
 import sys
 import urllib
+import urllib.parse
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler
 
@@ -20,6 +21,11 @@ class WavHandler(SimpleHTTPRequestHandler):
 
     def list_directory(self, path):
         """Overridden to have <audio> elements for .wav files."""
+        # determine if a filter is requested
+        filt = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query).get(
+            "filter", None
+        )
+
         try:
             list = os.listdir(path)
         except OSError:
@@ -47,6 +53,8 @@ class WavHandler(SimpleHTTPRequestHandler):
         r.append('\n<p><a href="../">Upper directory</a></p>')
         r.append("<hr>\n<ul>")
         for name in list:
+            if filt and filt[0] not in name:
+                continue
             fullname = os.path.join(path, name)
             displayname = linkname = name
             # Append / for directories or @ for symbolic links
