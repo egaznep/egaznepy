@@ -72,7 +72,7 @@ class WavHandler(SimpleHTTPRequestHandler):
                     html.escape(displayname, quote=False),
                 )
             )
-            if ".wav" in linkname:
+            if (".wav" in linkname) or (".flac" in linkname):
                 r.append(
                     '<audio controls preload="none"><source src="%s"></audio>' % (name)
                 )
