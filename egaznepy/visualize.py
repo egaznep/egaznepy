@@ -1,4 +1,6 @@
 # visualization aids
+from typing import Optional
+
 import os
 from collections import defaultdict
 from collections.abc import Iterable
@@ -13,6 +15,7 @@ from matplotlib.figure import Figure
 
 # might be useful for figure size adjustments
 golden_ratio = (1 + 5**0.5) / 2
+
 
 # load plot styling
 def get_custom_cycler():
@@ -33,7 +36,7 @@ def get_custom_cycler():
     )
 
 
-def apply_plot_style(font_scale: int = 0.7):
+def apply_plot_style(font_scale: float = 0.7):
     """Applies my personal academic plot style. Requires LaTeX for correct
     operation.
     """
@@ -87,7 +90,7 @@ def apply_plot_style(font_scale: int = 0.7):
     sns.set_context("paper", font_scale=font_scale, rc=rc)
 
 
-def legend_with_unique_entries(fig: Figure, ax: Axes = None):
+def legend_with_unique_entries(fig: Figure, ax: Optional[Axes] = None):
     """Putting a legend to a figure with multiple subplots is troublesome as
     identical elements might be repeated. Filter out already defined entries
     and re-create a legend.
@@ -114,7 +117,7 @@ class FigureWriter:
         self.figures_root = figures_root
         self.extensions = extensions
 
-    def write(self, file_name: str, fig: Figure = None, tight: bool = True):
+    def write(self, file_name: str, fig: Optional[Figure] = None, tight: bool = True):
         """Writes a figure `fig` to the folder `self.figures_root /
         file_name.extension` for each extension in self.extensions
 
@@ -134,12 +137,11 @@ class FigureWriter:
         for extension in self.extensions:
             path = (self.figures_root / file_name).with_suffix(extension)
             # make new folder in case it does not exist
-            print(path)
             path.parent.mkdir(parents=True, exist_ok=True)
-            fig.savefig(path, **kwargs)
+            fig.savefig(str(path), **kwargs)
 
 
-def apply_hatch_barplot(obj: Axes, hatches: Iterable = None):
+def apply_hatch_barplot(obj: Axes, hatches: Optional[Iterable] = None):
     """This function manually adds different (and unique) hatches to
     barplots. Useful while trying to obtain black & white printable plots.
 

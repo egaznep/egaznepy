@@ -3,9 +3,10 @@ channels:
   - conda-forge
 dependencies:
   - mamba
-  - python<3.10
+  - python>=3.9
   - matplotlib
   - seaborn
+  - IPython
   # development prequisites
   - typer
   - pre-commit

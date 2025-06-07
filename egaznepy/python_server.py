@@ -36,7 +36,7 @@ class WavHandler(SimpleHTTPRequestHandler):
         try:
             displaypath = urllib.parse.unquote(self.path, errors="surrogatepass")
         except UnicodeDecodeError:
-            displaypath = urllib.parse.unquote(path)
+            displaypath = urllib.parse.unquote(str(path))
         displaypath = html.escape(displaypath, quote=False)
         enc = sys.getfilesystemencoding()
         title = "Directory listing for %s" % displaypath
