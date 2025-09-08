@@ -1,0 +1,26 @@
+axes.grid: True
+grid.color: gray
+grid.linestyle: dotted
+grid.linewidth: 0.8
+grid.alpha: 0.5
+lines.linewidth: 0.8
+figure.autolayout: True
+text.usetex: True
+font.family: serif
+xtick.major.width: 0.5
+ytick.major.width: 0.5
+xtick.bottom: True
+xtick.major.pad: 2
+ytick.major.pad: 2
+xtick.major.size: 3
+ytick.major.size: 3
+ytick.left: True
+figure.dpi: 100
+legend.frameon: False
+lines.markerfacecolor: gray
+lines.markeredgecolor: black
+patch.force_edgecolor: false
+text.latex.preamble: \usepackage{lmodern}\usepackage{stackengine}\usepackage{anyfontsize}\usepackage{amsmath}\usepackage{bm}\mathchardef\minus=2D\newcommand{\ra}{$\rightarrow$ }\newcommand{\ua}{$\uparrow$}\newcommand{\da}{$\downarrow$}
+pgf.preamble: \usepackage{lmodern}\usepackage{stackengine}\usepackage{anyfontsize}\usepackage{amsmath}\usepackage{bm}\mathchardef\minus=2D\newcommand{\ra}{$\rightarrow$ }\newcommand{\ua}{$\uparrow$}\newcommand{\da}{$\downarrow$}
+axes.spines.right: False
+axes.spines.top: False

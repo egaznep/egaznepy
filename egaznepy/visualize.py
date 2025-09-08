@@ -42,52 +42,8 @@ def apply_plot_style(font_scale: float = 0.7):
     """
     plt.rcdefaults()
     sns.set_style(style="white")
-    rc = {
-        "axes.grid": True,
-        "grid.color": "gray",
-        "grid.linestyle": "dotted",
-        "grid.linewidth": 0.8,
-        "grid.alpha": 0.5,
-        "lines.linewidth": 0.8,
-        "figure.autolayout": True,
-        # Use LaTeX to write all text
-        "text.usetex": True,
-        "font.family": "serif",
-        "xtick.major.width": 0.5,
-        "ytick.major.width": 0.5,
-        "xtick.bottom": True,
-        "xtick.major.pad": 2,
-        "ytick.major.pad": 2,
-        "xtick.major.size": 3,
-        "ytick.major.size": 3,
-        "ytick.left": True,
-        "figure.dpi": 100,
-        "legend.frameon": False,
-        "lines.markerfacecolor": "gray",
-        "lines.markeredgecolor": "black",
-        "patch.force_edgecolor": "false",
-        "text.latex.preamble": r"""
-    \usepackage{lmodern}
-    \usepackage{anyfontsize}
-    \usepackage{stackengine}
-    \mathchardef\minus="2D
-    """,
-        "pgf.preamble": r"""
-    \usepackage{lmodern}
-    \usepackage{stackengine}
-    \usepackage{anyfontsize}
-    \mathchardef\minus="2D
-    \newcommand{\ra}{$\rightarrow$ }
-    \newcommand{\ua}{$\uparrow$}
-    \newcommand{\da}{$\downarrow$}
-
-    """,
-        "axes.spines.right": False,
-        "axes.spines.top": False,
-    }
-    # plot scaling issue
-    mpl.rcParams.update(rc)
-    sns.set_context("paper", font_scale=font_scale, rc=rc)
+    sns.set_context("paper", font_scale=font_scale)
+    plt.style.use(Path(__file__).parent / "egaznepy.mplstyle")
 
 
 def legend_with_unique_entries(fig: Figure, ax: Optional[Axes] = None):
