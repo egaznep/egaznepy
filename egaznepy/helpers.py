@@ -58,6 +58,9 @@ def trim_vectors_to_same_len(*args):
     """Trims arbitrary number of vectors to the same length
     (minimum of all vectors). Useful for audio.
 
+    Args:
+        *args: Iterable of list-likes to be trimmed.
+
     Returns:
         list[np.ndarray]: A list of vectors that are trimmed to same len.
     """
