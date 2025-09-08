@@ -1,4 +1,5 @@
 """Tests for hello function."""
+
 import shutil
 from pathlib import Path
 
@@ -41,14 +42,10 @@ _case1_ext3 = np.append(_case1_ext3, np.zeros(100))
 )
 def test_align(x: np.ndarray, x_ref: np.ndarray, expected: np.ndarray):
     result = align_signals(x, x_ref)
-    if not np.alltrue(
-        np.logical_or(np.isclose(result, expected), np.isclose(result, 0))
-    ):
+    if not np.all(np.logical_or(np.isclose(result, expected), np.isclose(result, 0))):
         import matplotlib.pyplot as plt
 
         plt.plot(result, label="result")
         plt.plot(expected, label="expected")
         plt.show()
-    assert np.alltrue(
-        np.logical_or(np.isclose(result, expected), np.isclose(result, 0))
-    )
+    assert np.all(np.logical_or(np.isclose(result, expected), np.isclose(result, 0)))
