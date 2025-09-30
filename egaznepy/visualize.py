@@ -7,8 +7,11 @@ from collections.abc import Iterable
 from pathlib import Path
 
 import cycler
+import librosa.display
 import matplotlib as mpl
+import matplotlib.collections as mcoll
 import matplotlib.pyplot as plt
+import numpy as np
 import seaborn as sns
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
@@ -115,3 +118,40 @@ def apply_hatch_barplot(obj: Axes, hatches: Optional[Iterable] = None):
     for p in obj.patches:
         p.set_hatch(hatch_dict[p.get_facecolor()])
         p.set_edgecolor("white")
+
+
+librosa.display.specshow()
+
+
+def update_specshow(
+    cm: mcoll.QuadMesh,
+    data: np.ndarray,
+    sr: int,
+    hop_length: int,
+    x_axis: str,
+    y_axis: str,
+):
+    """
+    A convenience function to dynamically update a librosa specshow (e.g.,)
+    in an interactive environment.
+
+    Args:
+        cm (mcoll.QuadMesh): The QuadMesh object to update.
+        data (np.ndarray): The new data to display.
+        sr (int): The sample rate of the audio.
+        hop_length (int): The hop length used in the STFT.
+        x_axis (str): The label for the x-axis.
+        y_axis (str): The label for the y-axis.
+    """
+    # first obtain new coordinates
+    x_coords = librosa.display.__mesh_coords(
+        x_axis, None, data.shape[1], sr=sr, hop_length=hop_length
+    )
+    y_coords = librosa.display.__mesh_coords(
+        y_axis, None, data.shape[0], sr=sr, hop_length=hop_length
+    )
+
+    # update the QuadMesh object
+    cm._coordinates = np.concatenate([x_coords, y_coords])
+    cm.set_array(data.ravel())
+    return cm

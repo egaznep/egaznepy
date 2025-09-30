@@ -21,6 +21,7 @@ dependencies = [
   "scipy",
   "matplotlib",
   "seaborn",
+  "librosa",
 ]
 
 [build-system]
