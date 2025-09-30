@@ -120,9 +120,6 @@ def apply_hatch_barplot(obj: Axes, hatches: Optional[Iterable] = None):
         p.set_edgecolor("white")
 
 
-librosa.display.specshow()
-
-
 def update_specshow(
     cm: mcoll.QuadMesh,
     data: np.ndarray,
