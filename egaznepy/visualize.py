@@ -11,6 +11,7 @@ import librosa.display
 import matplotlib as mpl
 import matplotlib.collections as mcoll
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mplticker
 import numpy as np
 import seaborn as sns
 from matplotlib.axes import Axes
@@ -147,8 +148,32 @@ def update_specshow(
     y_coords = librosa.display.__mesh_coords(
         y_axis, None, data.shape[0], sr=sr, hop_length=hop_length
     )
+    X, Y, C, _ = cm.axes._pcolorargs(
+        "pcolormesh", x_coords, y_coords, data, rasterized=True, shading="auto"
+    )
 
     # update the QuadMesh object
-    cm._coordinates = np.concatenate([x_coords, y_coords])
-    cm.set_array(data.ravel())
+    if y_axis not in ["off", None, "none"]:
+        cm.axes.yaxis.set_tick_params(reset=True)
+    cm._coordinates = np.stack([X, Y], axis=-1)
+    cm.set_array(C)
+    # if ticks were removed, this is necessary to have them again
+    cm.axes.yaxis.set_major_locator(mplticker.AutoLocator())
+    librosa.display.__decorate_axis(
+        cm.axes.xaxis, x_axis, fmin=None, n_bins=data.shape[1], bins_per_octave=12
+    )
+    librosa.display.__decorate_axis(
+        cm.axes.yaxis, y_axis, fmin=None, n_bins=data.shape[0], bins_per_octave=12
+    )
+    librosa.display.__scale_axes(cm.axes, x_axis, "x", tempo_min=None, tempo_max=None)
+    librosa.display.__scale_axes(cm.axes, y_axis, "y", tempo_min=None, tempo_max=None)
+    # set bounds
+    minx, miny = np.min(cm._coordinates.reshape(-1, 2), axis=0)
+    maxx, maxy = np.max(cm._coordinates.reshape(-1, 2), axis=0)
+    cm.sticky_edges.x[:] = [minx, maxx]
+    cm.sticky_edges.y[:] = [miny, maxy]
+    corners = (minx, miny), (maxx, maxy)
+    cm.axes.update_datalim(corners)
+    cm.axes.set_xlim(minx, maxx)
+    cm.axes.set_ylim(miny, maxy)
     return cm

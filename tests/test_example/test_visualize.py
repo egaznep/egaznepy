@@ -46,3 +46,16 @@ def test_legend_filter(fig, expected_num_entries):
     mpl.rcParams["text.usetex"] = False  # disable LaTeX
     vis.legend_with_unique_entries(fig)
     assert len(fig.gca().get_legend_handles_labels()[0]) == expected_num_entries
+
+
+def test_update_specshow():
+    fig = vis.Figure()
+    cm = vis.librosa.display.specshow(vis.np.random.randn(100, 100), ax=fig.gca())
+    vis.update_specshow(
+        cm,
+        vis.np.random.randn(100, 200),
+        sr=22050,
+        hop_length=512,
+        x_axis="time",
+        y_axis="linear",
+    )
