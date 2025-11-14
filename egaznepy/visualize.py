@@ -206,3 +206,17 @@ def add_or_update_colorbar(
         # Create a new colorbar
         cbar = fig.colorbar(mappable, ax=ax)
     return cbar
+
+
+def unshare_axes_if_shared(ax: Axes):
+    """
+    Unshare the x and y axes of the given Axes object, if they are shared.
+
+    Args:
+        ax (Axes): The axes object to unshare.
+    """
+    if hasattr(ax, "_shared_axes"):
+        ax._sharex = None
+        ax._sharey = None
+        ax._shared_axes["x"].remove(ax)
+        ax._shared_axes["y"].remove(ax)

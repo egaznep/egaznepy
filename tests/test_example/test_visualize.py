@@ -12,10 +12,11 @@ import egaznepy.visualize as vis
 
 @pytest.fixture()
 def figure():
-    fig, axs = plt.subplots(2, 1)
+    fig, axs = plt.subplots(3, 1)
     cm1 = vis.librosa.display.specshow(vis.np.random.randn(100, 100), ax=axs[0])
     cm2 = vis.librosa.display.specshow(vis.np.random.randn(100, 100), ax=axs[1])
-    return fig, axs, [cm1, cm2]
+    cm3 = vis.librosa.display.specshow(vis.np.random.randn(100, 100), ax=axs[2])
+    return fig, axs, [cm1, cm2, cm3]
 
 
 @pytest.mark.parametrize(
@@ -79,3 +80,13 @@ def test_add_or_update_colorbar(figure):
     # update colorbar
     cbar3 = vis.add_or_update_colorbar(fig, axs[0], cms[0])
     assert cbar3 == cbar  # the new colorbar should be the same as the old one
+
+
+def test_unshare(figure):
+    fig, axs, cms = figure
+    vis.unshare_axes_if_shared(ax=axs[1])  # should not do anything
+    # now share the axes
+    axs[1].sharex(axs[0])
+    vis.unshare_axes_if_shared(ax=axs[1])
+    # now sharing with another axis should work
+    axs[1].sharex(axs[2])
