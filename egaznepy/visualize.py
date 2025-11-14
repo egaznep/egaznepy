@@ -15,6 +15,7 @@ import matplotlib.ticker as mplticker
 import numpy as np
 import seaborn as sns
 from matplotlib.axes import Axes
+from matplotlib.colorbar import Colorbar
 from matplotlib.figure import Figure
 
 # might be useful for figure size adjustments
@@ -177,3 +178,31 @@ def update_specshow(
     cm.axes.set_xlim(minx, maxx)
     cm.axes.set_ylim(miny, maxy)
     return cm
+
+
+def add_or_update_colorbar(
+    fig: Figure,
+    ax: Axes,
+    mappable: mcoll.QuadMesh,
+):
+    """
+    A convenience function to add or update a colorbar for a given mappable
+    in a figure.
+
+    Args:
+        fig (Figure): The Matplotlib figure object.
+        ax (Axes): The axes object where the mappable is displayed.
+        mappable (mcoll.QuadMesh): The mappable object (e.g., QuadMesh) to
+        associate the colorbar with.
+    """
+    # Check if a colorbar already exists for the given axes
+    existing_colorbars = ax._colorbars if hasattr(ax, "_colorbars") else []
+
+    if existing_colorbars:
+        # Update the existing colorbar
+        cbar = existing_colorbars[0]._colorbar
+        cbar.update_normal(mappable)
+    else:
+        # Create a new colorbar
+        cbar = fig.colorbar(mappable, ax=ax)
+    return cbar
