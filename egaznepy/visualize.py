@@ -220,3 +220,48 @@ def unshare_axes_if_shared(ax: Axes):
         ax._sharey = None
         ax._shared_axes["x"].remove(ax)
         ax._shared_axes["y"].remove(ax)
+
+
+def format_coord(ax: Axes, x: float, y: float):
+    """Format the coordinate display for a given Axes object.
+
+    Args:
+        ax (Axes): The axes object to format coordinates for.
+        x (float): The x-coordinate.
+        y (float): The y-coordinate.
+
+    Returns:
+        str: Formatted coordinate string.
+    """
+    twins = ax._twinned_axes.get_siblings(ax)
+    if len(twins) == 1:
+        s = "(x, y) = ({}, {})".format(
+            "???" if x is None else ax.format_xdata(x),
+            "???" if y is None else ax.format_ydata(y),
+        )
+    else:
+        raise NotImplementedError(
+            "custom format_coord is not implemented for axes with multiple twins."
+        )
+    # determine the value at (x, y)
+    if ax.collections:
+        coll = ax.collections[0]
+        if isinstance(coll, mcoll.QuadMesh):
+            # get the data array
+            data = coll.get_array()
+            # get the coordinates
+            coords = coll._coordinates
+            idx_x = np.searchsorted(coords[0, :, 0], x)
+            idx_y = np.searchsorted(coords[:, 0, 1], y)
+            val = data[idx_y - 1, idx_x - 1]
+            s += f" [{val:.4f}]"
+    return s
+
+
+def monkey_patch_format_coord(ax: Axes):
+    """Monkey patch the format_coord method of the given Axes object.
+
+    Args:
+        ax (Axes): The axes object to patch.
+    """
+    ax.format_coord = lambda x, y: format_coord(ax, x, y)

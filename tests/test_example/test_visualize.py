@@ -1,5 +1,6 @@
 """Tests for hello function."""
 
+import re
 import shutil
 from pathlib import Path
 
@@ -13,9 +14,16 @@ import egaznepy.visualize as vis
 @pytest.fixture()
 def figure():
     fig, axs = plt.subplots(3, 1)
-    cm1 = vis.librosa.display.specshow(vis.np.random.randn(100, 100), ax=axs[0])
+    cm1 = vis.librosa.display.specshow(
+        vis.np.random.randn(513, 100),
+        ax=axs[0],
+        sr=16000,
+        hop_length=256,
+        x_axis="time",
+        y_axis="mel",
+    )
     cm2 = vis.librosa.display.specshow(vis.np.random.randn(100, 100), ax=axs[1])
-    cm3 = vis.librosa.display.specshow(vis.np.random.randn(100, 100), ax=axs[2])
+    cm3 = axs[2].imshow(vis.np.random.randn(100, 100))
     return fig, axs, [cm1, cm2, cm3]
 
 
@@ -90,3 +98,11 @@ def test_unshare(figure):
     vis.unshare_axes_if_shared(ax=axs[1])
     # now sharing with another axis should work
     axs[1].sharex(axs[2])
+
+
+def test_format_coord(figure):
+    fig, axs, cms = figure
+    vis.monkey_patch_format_coord(axs[0])
+    fmt = axs[0].format_coord(0.5, 0.5)
+    # assert if a number in square brackets is in the format string, e.g., "[0.1234]" using regex
+    assert re.search(r"\[\s*-?\d+\.\d+\s*\]", fmt) is not None
