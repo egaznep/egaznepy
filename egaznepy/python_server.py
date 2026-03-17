@@ -91,6 +91,7 @@ class WavHandler(SimpleHTTPRequestHandler):
 
 WavHandler.extensions_map[".wav"] = "audio/wav"
 WavHandler.extensions_map[""] = "text/plain"
+WavHandler.extensions_map[".scp"] = "text/plain"
 
 
 def main(port: int = 8080):
