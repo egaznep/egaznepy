@@ -1,4 +1,5 @@
 import subprocess
+from collections.abc import Iterable
 
 import numpy as np
 import scipy.signal
@@ -75,3 +76,15 @@ def invoke_command(*args):
     """
     out = subprocess.run(*args, capture_output=True, check=False, shell=True)
     return out.stdout.decode() + "\n" + out.stderr.decode()
+
+
+def listify(x):
+    """
+    Recursively converts an arbitrary nested structure of iterables into a
+    nested structure of lists. Useful for converting
+    tuples/OmegaConf.ListConfigs into lists.
+    """
+    if isinstance(x, str):
+        return x
+    elif isinstance(x, Iterable):
+        return [listify(item) for item in x]
