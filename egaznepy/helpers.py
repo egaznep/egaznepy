@@ -88,3 +88,18 @@ def listify(x):
         return x
     elif isinstance(x, Iterable):
         return [listify(item) for item in x]
+
+
+def list_of_tuples(x):
+    """
+    Process x such that it conforms to the TensorDictModule.in_keys.
+    """
+    out = []
+    for item in x:
+        if isinstance(item, str):
+            out.append((item,))
+        elif isinstance(item, Iterable):
+            out.append(tuple(item))
+        else:
+            raise ValueError(f"Unsupported type {type(item)} in list_of_tuples.")
+    return out
